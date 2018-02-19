@@ -5,5 +5,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ClienteTest.class, CursoTest.class, PropostaTest.class})
-public class DomainModelsTest {
+public interface DomainModelsTest {
 }
