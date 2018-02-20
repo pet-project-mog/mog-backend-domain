@@ -1,3 +1,4 @@
 module br.com.caelum.mog.domain {
-    requires hibernate.jpa;
+    exports br.com.caelum.mog.domain.models;
+    exports br.com.caelum.mog.domain.repositories;
 }
