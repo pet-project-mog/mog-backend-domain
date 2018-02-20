@@ -7,7 +7,7 @@ import java.util.List;
 public interface Proposta {
     Long getId();
 
-    List<? extends Curso> getCursos();
+    <T extends Curso> List<T> getCursos();
 
     Cliente getCliente();
 
