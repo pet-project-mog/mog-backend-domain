@@ -5,7 +5,9 @@ import java.time.Period;
 import java.util.List;
 
 public interface Proposta {
-    List<Curso> getCursos();
+    Long getId();
+
+    List<? extends Curso> getCursos();
 
     Cliente getCliente();
 
@@ -14,4 +16,5 @@ public interface Proposta {
     default BigDecimal getTotal(){
         return getCursos().stream().map(Curso::getValor).reduce(BigDecimal.ZERO,BigDecimal::add);
     }
+
 }
