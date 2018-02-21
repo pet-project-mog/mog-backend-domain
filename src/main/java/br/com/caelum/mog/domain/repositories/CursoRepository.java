@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface CursoRepository {
     void save(Curso curso);
     Optional<Curso> findById(Long id);
+
+    Iterable<Curso> findAll();
 }
