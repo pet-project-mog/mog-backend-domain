@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.Objects;
 
 @Entity
 public class Curso {
