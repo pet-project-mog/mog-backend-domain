@@ -1,24 +1,24 @@
 package br.com.caelum.mog.domain.models;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Period;
 
-public class PropostaTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-    @Rule
-    public ExpectedException throwing = ExpectedException.none();
+class PropostaTest {
+
+
     private Curso fj11;
     private Curso fj21;
     private Cliente cdc;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
         cdc = new Cliente("CDC", "Casa do código", "11.111.111/1111-11");
         fj11 = new Curso("Java e Orientação a objetos", new BigDecimal("2290"), Duration.ofHours(40));
         fj21 = new Curso("Java para Desenvolvimento web", new BigDecimal("2890"), Duration.ofHours(40));
@@ -26,48 +26,47 @@ public class PropostaTest {
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmaPropostaComClienteNulo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Cliente é obrigatório");
+    void naoDeveSerPossivelInstanciarUmaPropostaComClienteNulo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                                        () -> new Proposta(null, Period.ofWeeks(2), fj11, fj21));
 
-        new Proposta(null, Period.ofWeeks(2), fj11, fj21);
+        assertEquals("Cliente é obrigatório", exception.getMessage());
     }
 
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmaPropostaComPeriodoNulo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Período é obrigatório");
+    void naoDeveSerPossivelInstanciarUmaPropostaComPeriodoNulo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                                        () -> new Proposta(cdc, null, fj11, fj21));
 
-        new Proposta(cdc, null, fj11, fj21);
+
+        assertEquals("Período é obrigatório", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmaPropostaComPeriodoNegativo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Período não pode ser negativo");
+    void naoDeveSerPossivelInstanciarUmaPropostaComPeriodoNegativo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                                        () -> new Proposta(cdc, Period.ofWeeks(-2), fj11, fj21));
 
-        new Proposta(cdc, Period.ofWeeks(-2), fj11, fj21);
+        assertEquals("Período não pode ser negativo", exception.getMessage());
     }
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmaPropostaComPeriodoZerado(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Período não pode ser zero");
+    void naoDeveSerPossivelInstanciarUmaPropostaComPeriodoZerado(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                                        () -> new Proposta(cdc, Period.ofWeeks(0), fj11, fj21));
 
-        new Proposta(cdc, Period.ofWeeks(0), fj11, fj21);
+        assertEquals("Período não pode ser zero", exception.getMessage());
     }
 
 
     @Test
-    public void nadoDeveSerPossivelInstanciarUmaPropostaSemCursos(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Deve ter pelo menos um curso");
+    void nadoDeveSerPossivelInstanciarUmaPropostaSemCursos(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                                        () -> new Proposta(cdc, Period.ofWeeks(2)));
 
-        new Proposta(cdc, Period.ofWeeks(2));
+        assertEquals("Deve ter pelo menos um curso", exception.getMessage());
     }
-
-
 }

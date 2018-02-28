@@ -27,8 +27,8 @@ public class Cliente {
     public Cliente(String nomeFantasia, String razaoSocial, String cnpj) {
 
         Assert.hasText(nomeFantasia, "Nome fantasia é obrigatório");
-        Assert.hasText(razaoSocial, "Razão social é obrigatória.");
-        Assert.hasText(cnpj,"CNPJ é obrigatório.");
+        Assert.hasText(razaoSocial, "Razão social é obrigatória");
+        Assert.hasText(cnpj,"CNPJ é obrigatório");
 
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;

@@ -1,90 +1,79 @@
 package br.com.caelum.mog.domain.models;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 
-public class CursoTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
-    @Rule
-    public ExpectedException throwing = ExpectedException.none();
-
+class CursoTest {
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComNomeNulo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Nome é obrigatório");
+    void naoDeveSerPossivelInstanciarUmCursoComNomeNulo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                        () -> new Curso(null, new BigDecimal("2290"), Duration.ofHours(40)));
 
-        new Curso(null, new BigDecimal("2290"), Duration.ofHours(40));
+        assertEquals("Nome é obrigatório", exception.getMessage());
 
     }
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComNomeVazio(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Nome é obrigatório");
+    void naoDeveSerPossivelInstanciarUmCursoComNomeVazio(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                        () -> new Curso("", new BigDecimal("2290"), Duration.ofHours(40)));
 
-        new Curso("", new BigDecimal("2290"), Duration.ofHours(40));
-    }
+        assertEquals("Nome é obrigatório", exception.getMessage());
 
-    @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComPrecoNulo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Preço é obrigatório");
-
-
-        new Curso("Java e Orientação a Objetos", null, Duration.ofHours(40));
-    }
-
-    @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComPrecoNegativo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Preço deve ser maior que zero");
-
-        new Curso("Java e Orientação a Objetos", new BigDecimal("-1"), Duration.ofHours(40));
 
     }
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComPrecoZerado(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Preço deve ser maior que zero");
+    void naoDeveSerPossivelInstanciarUmCursoComPrecoNulo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                                () -> new Curso("Java e Orientação a Objetos", null, Duration.ofHours(40)));
+        assertEquals("Preço é obrigatório", exception.getMessage());
+    }
 
-        new Curso("Java e Orientação a Objetos", BigDecimal.ZERO, Duration.ofHours(40));
+    @Test
+    void naoDeveSerPossivelInstanciarUmCursoComPrecoNegativo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                    () -> new Curso("Java e Orientação a Objetos", new BigDecimal("-1"), Duration.ofHours(40)));
+
+        assertEquals("Preço deve ser maior que zero", exception.getMessage());
+    }
+
+    @Test
+    void naoDeveSerPossivelInstanciarUmCursoComPrecoZerado(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                            () -> new Curso("Java e Orientação a Objetos", BigDecimal.ZERO, Duration.ofHours(40)));
+        assertEquals("Preço deve ser maior que zero", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComCargaHorariaNula(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Carga horária é obrigatória");
-
-
-        new Curso("Java e Orientação a Objetos", new BigDecimal("2290"), null);
+    void naoDeveSerPossivelInstanciarUmCursoComCargaHorariaNula(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                    () -> new Curso("Java e Orientação a Objetos", new BigDecimal("2290"), null));
+        assertEquals("Carga horária é obrigatória", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComCargaHorariaNegativa(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Carga horária não pode ser negativa");
-
-
-        new Curso("Java e Orientação a Objetos", new BigDecimal("2290"), Duration.ofHours(-8));
+    void naoDeveSerPossivelInstanciarUmCursoComCargaHorariaNegativa(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Curso("Java e Orientação a Objetos", new BigDecimal("2290"), Duration.ofHours(-8)));
+        assertEquals("Carga horária não pode ser negativa", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmCursoComCargaHorariaZerada(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Carga horária não pode ser zero");
-
-
-        new Curso("Java e Orientação a Objetos", new BigDecimal("2290"), Duration.ofHours(0));
+    void naoDeveSerPossivelInstanciarUmCursoComCargaHorariaZerada(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Curso("Java e Orientação a Objetos", new BigDecimal("2290"), Duration.ofHours(0)));
+        assertEquals("Carga horária não pode ser zero", exception.getMessage());
     }
 
 }

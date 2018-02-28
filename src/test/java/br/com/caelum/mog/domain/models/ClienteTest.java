@@ -1,70 +1,59 @@
 package br.com.caelum.mog.domain.models;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-public class ClienteTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-    @Rule
-    public ExpectedException throwing = ExpectedException.none();
-
+class ClienteTest {
+    
     @Test
-    public void naoDeveSerPossivelInstanciarUmClienteComUmNomeFantasiaNulo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Nome fantasia é obrigatório");
-
-        new Cliente(null, "Casa do código", "11.111.111/1111-11");
-
-
+    void naoDeveSerPossivelInstanciarUmClienteComUmNomeFantasiaNulo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+                () ->  new Cliente(null, "Casa do código", "11.111.111/1111-11"));
+        assertEquals("Nome fantasia é obrigatório", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmClienteComUmNomeFantasiaVazio(){
+    void naoDeveSerPossivelInstanciarUmClienteComUmNomeFantasiaVazio(){
 
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Nome fantasia é obrigatório");
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Cliente("", "Casa do código", "11.111.111/1111-11"));
+        assertEquals("Nome fantasia é obrigatório", exception.getMessage());
 
-        new Cliente("", "Casa do código", "11.111.111/1111-11");
     }
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmClienteComUmaRazaoSocialNula(){
+    void naoDeveSerPossivelInstanciarUmClienteComUmaRazaoSocialNula(){
 
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Razão social é obrigatória");
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Cliente("CDC", null, "11.111.111/1111-11"));
 
-        new Cliente("CDC", null, "11.111.111/1111-11");
-
-
-
+        assertEquals("Razão social é obrigatória", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmClienteComUmaRazaoSocialVazia(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("Razão social é obrigatória");
-
-        new Cliente("CDC", "", "11.111.111/1111-11");
+    void naoDeveSerPossivelInstanciarUmClienteComUmaRazaoSocialVazia(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Cliente("CDC", "", "11.111.111/1111-11"));
+        assertEquals("Razão social é obrigatória", exception.getMessage());
     }
 
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmClienteComUmCNPJNulo(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("CNPJ é obrigatório");
-
-        new Cliente("CDC", "Casa do código", null);
+    void naoDeveSerPossivelInstanciarUmClienteComUmCNPJNulo(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Cliente("CDC", "Casa do código", null));
+        assertEquals("CNPJ é obrigatório", exception.getMessage());
     }
 
     @Test
-    public void naoDeveSerPossivelInstanciarUmClienteComUmCNPJVazio(){
-        throwing.expect(IllegalArgumentException.class);
-        throwing.expectMessage("CNPJ é obrigatório");
-
-        new Cliente("CDC", "Casa do código", "");
+    void naoDeveSerPossivelInstanciarUmClienteComUmCNPJVazio(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> new Cliente("CDC", "Casa do código", ""));
+        assertEquals("CNPJ é obrigatório", exception.getMessage());
     }
 
 }
